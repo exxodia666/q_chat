@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:q_chat/router/authRouter.dart';
-import 'package:q_chat/router/homeRouter.dart';
+import 'package:go_router/go_router.dart';
+import 'package:q_chat/features/authentication/router/authRouter.dart';
+import 'package:q_chat/features/home/router/homeRouter.dart';
 
 class MainRouter extends StatelessWidget {
   final bool isNotAuthorized;
@@ -10,6 +11,7 @@ class MainRouter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(isNotAuthorized);
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'QChat',
@@ -33,4 +35,18 @@ class MainRouter extends StatelessWidget {
       // home: const SignIn(),
     );
   }
+}
+
+void navigateTo(context, route, {String id = ''}) {
+  print(GoRouterState.of(context).path);
+  GoRouter.of(context).go(
+      '${GoRouterState.of(context).path}/$route${id.isNotEmpty ? '/$id' : ''}');
+}
+
+void switchTab(context, route) {
+  GoRouter.of(context).go(route);
+}
+
+void goBack(context) {
+  GoRouter.of(context).pop();
 }

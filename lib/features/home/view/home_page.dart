@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-
-import '../../authentication/bloc/authentication_bloc.dart';
+import 'package:q_chat/features/authentication/authentication.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -10,6 +8,7 @@ class HomePage extends StatelessWidget {
   static Route<void> route() {
     return MaterialPageRoute<void>(builder: (_) => const HomePage());
   }
+
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
@@ -39,13 +38,10 @@ class _LogoutButton extends StatelessWidget {
 
 class _UserId extends StatelessWidget {
   const _UserId();
-
   @override
   Widget build(BuildContext context) {
-    final userId = context.select(
-      (AuthenticationBloc bloc) => bloc.state.credentials.accessToken,
-    );
-
-    return Text('UserID: $userId');
+    return BlocBuilder<AuthenticationBloc, AuthenticationState>(
+        builder: (context, state) =>
+            Text('Access-Token: ${state.credentials.access_token}'));
   }
 }

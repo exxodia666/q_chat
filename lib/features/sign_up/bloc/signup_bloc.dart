@@ -4,18 +4,18 @@ import 'package:formz/formz.dart';
 
 import '../models/models.dart';
 
-part 'login_event.dart';
-part 'login_state.dart';
+part 'signup_event.dart';
+part 'signup_state.dart';
 
-class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc() : super(const LoginState()) {
-    on<LoginUsernameChanged>(_onUsernameChanged);
-    on<LoginPasswordChanged>(_onPasswordChanged);
+class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
+  SignUpBloc() : super(const SignUpState()) {
+    on<SignUpUsernameChanged>(_onUsernameChanged);
+    on<SignUpPasswordChanged>(_onPasswordChanged);
   }
 
   void _onUsernameChanged(
-    LoginUsernameChanged event,
-    Emitter<LoginState> emit,
+    SignUpUsernameChanged event,
+    Emitter<SignUpState> emit,
   ) {
     final username = Username.dirty(event.username);
     emit(
@@ -27,8 +27,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   void _onPasswordChanged(
-    LoginPasswordChanged event,
-    Emitter<LoginState> emit,
+    SignUpPasswordChanged event,
+    Emitter<SignUpState> emit,
   ) {
     final password = Password.dirty(event.password);
     emit(

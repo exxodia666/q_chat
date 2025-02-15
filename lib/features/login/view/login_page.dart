@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../repositories/authentication_repository.dart';
 import '../bloc/login_bloc.dart';
 import 'login_form.dart';
 
@@ -19,9 +17,7 @@ class LoginPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(12),
         child: BlocProvider(
-          create: (context) => LoginBloc(
-            authenticationRepository: context.read<AuthenticationRepository>(),
-          ),
+          create: (context) => LoginBloc(),
           child: const LoginForm(),
         ),
       ),

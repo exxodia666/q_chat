@@ -19,3 +19,13 @@ final class AuthenticationViaEmailAndPassword extends AuthenticationEvent {
   const AuthenticationViaEmailAndPassword(
       {required this.email, required this.password});
 }
+
+final class SignUpViaEmailAndPassword extends AuthenticationEvent {
+  final String password;
+  final String email;
+
+  const SignUpViaEmailAndPassword(
+      {required this.email, required this.password});
+}
+
+final class InitWithCredentials extends AuthenticationEvent {}
