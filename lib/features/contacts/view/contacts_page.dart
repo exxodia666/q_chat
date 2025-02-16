@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:q_chat/features/authentication/authentication.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class ContactsPage extends StatelessWidget {
+  const ContactsPage({super.key});
 
   static Route<void> route() {
-    return MaterialPageRoute<void>(builder: (_) => const HomePage());
+    return MaterialPageRoute<void>(builder: (_) => const ContactsPage());
   }
 
   @override
@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [_UserId()],
+          children: [_UserId(), _LogoutButton()],
         ),
       ),
     );
@@ -28,7 +28,7 @@ class _LogoutButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      child: const Text('HOME'),
+      child: const Text('Logout'),
       onPressed: () {
         context.read<AuthenticationBloc>().add(AuthenticationLogoutPressed());
       },
@@ -41,6 +41,7 @@ class _UserId extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
-        builder: (context, state) => const Text('HOME'));
+        builder: (context, state) =>
+            Text('Contacts: ${state.credentials.accessToken}'));
   }
 }
