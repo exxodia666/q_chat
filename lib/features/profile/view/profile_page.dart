@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:q_chat/core/constants/routes.dart';
 import 'package:q_chat/features/authentication/authentication.dart';
+import 'package:q_chat/features/profile/bloc/profile_bloc.dart';
+import 'package:q_chat/features/profile/repositories/profile_repository.dart';
+import 'package:q_chat/shared/utils/navigation.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -28,9 +32,9 @@ class _LogoutButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      child: const Text('Logout'),
+      child: const Text('Edit'),
       onPressed: () {
-        context.read<AuthenticationBloc>().add(AuthenticationLogoutPressed());
+        navigateTo(context, Routes.editProfile);
       },
     );
   }
@@ -40,8 +44,13 @@ class _UserId extends StatelessWidget {
   const _UserId();
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthenticationBloc, AuthenticationState>(
-        builder: (context, state) =>
-            Text('Profile: ${state.credentials.accessToken}'));
+    return BlocBuilder<ProfileBloc, ProfileState>(
+        builder: (context, state) => Column(
+              children: [
+                Text('ID: ${state.user?.id}'),
+                Text('Email: ${state.user?.email}'),
+                Text('Username: ${state.user?.username}')
+              ],
+            ));
   }
 }

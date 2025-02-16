@@ -1,6 +1,7 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:q_chat/features/authentication/authentication.dart';
+import 'package:q_chat/features/profile/repositories/profile_repository.dart';
 import 'package:q_chat/shared/repositories/auth_credentials_repository.dart';
 import 'package:q_chat/shared/services/services.dart';
 
@@ -23,6 +24,9 @@ Future<void> setupDependencies() async {
   // setup repositories
   GetIt.I.registerSingleton<AuthenticationRepository>(
       AuthenticationRepository(baseService: baseService));
+
+  GetIt.I.registerSingleton<ProfileRepository>(
+      ProfileRepository(baseService: baseService));
 
   GetIt.I
       .registerSingleton<AuthCredentialsRepository>(authCredentialsRepository);
