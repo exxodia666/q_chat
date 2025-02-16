@@ -1,12 +1,13 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:q_chat/features/authentication/authentication.dart';
-// import 'package:q_chat/shared/models/models.dart';
 import 'package:q_chat/shared/repositories/auth_credentials_repository.dart';
 import 'package:q_chat/shared/services/services.dart';
 
 Future<void> setupDependencies() async {
+  FlutterSecureStorage storage = const FlutterSecureStorage();
 // init auth credentials Service
-  final authCredService = AuthorizationCredentialsService();
+  final authCredService = AuthorizationCredentialsService(storage: storage);
 // init auth credentials repository
   final authCredentialsRepository =
       AuthCredentialsRepository(authCredService: authCredService);

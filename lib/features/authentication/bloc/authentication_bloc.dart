@@ -66,7 +66,7 @@ class AuthenticationBloc
           await _authCredentialsRepository.getCredentials();
       if (credentials != null) {
         DateTime expirationDate =
-            JwtDecoder.getExpirationDate(credentials.access_token!);
+            JwtDecoder.getExpirationDate(credentials.accessToken);
         Duration timeLeft = expirationDate.difference(DateTime.now());
         int minutesLeft = timeLeft.inMinutes;
         int secsLeft = timeLeft.inSeconds;
@@ -74,6 +74,7 @@ class AuthenticationBloc
       }
       emit(state.copyWith(credentials: credentials));
     } catch (e) {
+      print('eror');
       print(e);
     }
   }

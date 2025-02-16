@@ -23,9 +23,9 @@ class AuthenticationService extends IAuthenticationService {
       "password": password,
       "session_name": "r823rh8723hr2"
     }, url: '/api/v1/signin');
-    print(res.body);
+    print('Signing ${res.body}');
     var decodedResponse = Credentials.fromJson(jsonDecode(res.body));
-    print(decodedResponse);
+    print('decodedResponse: $decodedResponse');
     return decodedResponse;
   }
 

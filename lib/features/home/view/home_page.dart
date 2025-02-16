@@ -42,6 +42,6 @@ class _UserId extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) =>
-            Text('Access-Token: ${state.credentials.access_token}'));
+            Text('Access-Token: ${state.credentials.accessToken}'));
   }
 }

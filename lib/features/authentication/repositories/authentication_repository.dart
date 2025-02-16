@@ -20,7 +20,7 @@ class AuthenticationRepository {
   }) async {
     final Credentials response = await authenticationService
         .signInUsingEmailAndPassword(email, password);
-    print(response);
+    print('logInResponse: $response');
     return response;
   }
 

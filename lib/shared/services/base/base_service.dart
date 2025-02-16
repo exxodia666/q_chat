@@ -23,14 +23,14 @@ class BaseService {
 
   Future<Credentials?> _ensureValidAccessToken(
       // ignore: non_constant_identifier_names
-      String? access_token,
+      String? accessToken,
       // ignore: non_constant_identifier_names
-      String? refresh_token) async {
-    print('isExpired: ${JwtDecoder.isExpired(access_token ?? '')}');
-    if (access_token == null || JwtDecoder.isExpired(access_token)) {
+      String? refreshToken) async {
+    print('isExpired: ${JwtDecoder.isExpired(accessToken ?? '')}');
+    if (accessToken == null || JwtDecoder.isExpired(accessToken)) {
       try {
-        final result = await _refreshAccessToken(refresh_token!);
-        print('GOT NEW ONE: ${result.access_token}');
+        final result = await _refreshAccessToken(refreshToken!);
+        print('GOT NEW ONE: ${result.accessToken}');
         _authorizationCredentialsService
             .saveCredentialsToSecuredStorage(result);
         return result;
@@ -50,17 +50,18 @@ class BaseService {
     // Retrieve Credentials;
     credentials = await _authorizationCredentialsService
         .retrieveCredentialsFromSecuredStorage();
-    print('FETCH DATA WITH TOKEN: ${credentials?.access_token ?? ''}');
+    print('FETCH DATA WITH TOKEN: ${credentials?.accessToken ?? ''}');
     // if access token is outdated
-    if (credentials?.refresh_token != null) {
-      credentials = await _ensureValidAccessToken(
-          credentials?.access_token, credentials?.refresh_token);
+    if (credentials?.refreshToken != null) {
+      var newCredentials = await _ensureValidAccessToken(
+          credentials?.accessToken, credentials?.refreshToken);
+      credentials = newCredentials ?? credentials;
     }
     var requestUrl = Uri.https(baseUrl!, url);
     Map<String, String> headers = {};
-    if (credentials?.access_token != null) {
-      print('New one used: ${credentials?.access_token ?? ''}');
-      headers['Authorization'] = 'Bearer ${credentials?.access_token ?? ''}';
+    if (credentials?.accessToken != null) {
+      print('New one used: ${credentials?.accessToken ?? ''}');
+      headers['Authorization'] = 'Bearer ${credentials?.accessToken ?? ''}';
     }
     var response =
         await http.post(requestUrl, body: json.encode(body), headers: headers);
@@ -72,16 +73,16 @@ class BaseService {
     // Retrieve Credentials;
     credentials = await _authorizationCredentialsService
         .retrieveCredentialsFromSecuredStorage();
-    print('FETCH DATA WITH TOKEN: ${credentials?.access_token ?? ''}');
+    print('FETCH DATA WITH TOKEN: ${credentials?.accessToken ?? ''}');
     // if access token is outdated
-    if (credentials?.refresh_token != null) {
-      credentials = await _ensureValidAccessToken(
-          credentials?.access_token, credentials?.refresh_token);
+    if (credentials?.refreshToken != null) {
+      var newCredentials = await _ensureValidAccessToken(
+          credentials?.accessToken, credentials?.refreshToken);
+      credentials = newCredentials ?? credentials;
     }
     var requestUrl = Uri.https(baseUrl!, url);
-    var response = await http.delete(requestUrl, headers: {
-      'Authorization': 'Bearer ${credentials?.access_token ?? ''}'
-    });
+    var response = await http.delete(requestUrl,
+        headers: {'Authorization': 'Bearer ${credentials?.accessToken ?? ''}'});
     return response;
   }
 
@@ -90,16 +91,17 @@ class BaseService {
     // Retrieve Credentials;
     credentials = await _authorizationCredentialsService
         .retrieveCredentialsFromSecuredStorage();
-    print('FETCH DATA WITH TOKEN: ${credentials?.access_token ?? ''}');
+    print('FETCH DATA WITH TOKEN: ${credentials?.accessToken ?? ''}');
     // if access token is outdated
-    if (credentials?.refresh_token != null) {
-      credentials = await _ensureValidAccessToken(
-          credentials?.access_token, credentials?.refresh_token);
+    if (credentials?.refreshToken != null) {
+      var newCredentials = await _ensureValidAccessToken(
+          credentials?.accessToken, credentials?.refreshToken);
+      credentials = newCredentials ?? credentials;
     }
     var requestUrl = Uri.https(baseUrl!, url);
     var response = await http.get(
       requestUrl,
-      headers: {'Authorization': 'Bearer ${credentials?.access_token ?? ''}'},
+      headers: {'Authorization': 'Bearer ${credentials?.accessToken ?? ''}'},
     );
     return response;
   }
