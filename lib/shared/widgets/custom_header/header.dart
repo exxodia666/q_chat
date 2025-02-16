@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:q_chat/shared/router/mainRouter.dart';
 import 'package:q_chat/shared/theme/colors.dart';
 import 'package:q_chat/shared/theme/typography.dart';
+import 'package:q_chat/shared/utils/navigation.dart';
 
 // ignore: must_be_immutable
 class CustomHeader extends StatelessWidget implements PreferredSizeWidget {

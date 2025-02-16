@@ -5,7 +5,7 @@ import 'package:q_chat/features/authentication/router/authRouter.dart';
 import 'package:q_chat/features/contacts/router/contactsRouter.dart';
 import 'package:q_chat/features/home/router/homeRouter.dart';
 import 'package:q_chat/features/profile/router/profileRouter.dart';
-import 'package:q_chat/shared/router/scaffold.dart';
+import 'package:q_chat/shared/widgets/custom_scaffold/scaffold.dart';
 import 'package:q_chat/shared/widgets/bottom_bar/bottom_bar.dart';
 
 final GlobalKey<NavigatorState> rootNavigatorKey =
@@ -71,20 +71,6 @@ class MainRouter extends StatelessWidget {
       // home: const SignIn(),
     );
   }
-}
-
-void navigateTo(context, route, {String id = ''}) {
-  print('path: ${GoRouterState.of(context).path}');
-  GoRouter.of(context).go(
-      '${GoRouterState.of(context).path}/$route${id.isNotEmpty ? '/$id' : ''}');
-}
-
-void switchTab(context, route) {
-  GoRouter.of(context).go(route);
-}
-
-void goBack(context) {
-  GoRouter.of(context).pop();
 }
 
 

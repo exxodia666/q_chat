@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:q_chat/core/constants/routes.dart';
 import 'package:q_chat/features/authentication/bloc/authentication_bloc.dart';
-import 'package:q_chat/shared/router/mainRouter.dart';
+import 'package:q_chat/shared/utils/navigation.dart';
 
 import '../bloc/login_bloc.dart';
 
