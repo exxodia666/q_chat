@@ -11,8 +11,8 @@ import 'package:q_chat/shared/widgets/bottom_bar/bottom_bar.dart';
 final GlobalKey<NavigatorState> rootNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'root');
 
-final GlobalKey<NavigatorState> _authNavigatorKey =
-    GlobalKey<NavigatorState>(debugLabel: 'auth');
+// final GlobalKey<NavigatorState> _authNavigatorKey =
+//     GlobalKey<NavigatorState>(debugLabel: 'auth');
 
 class MainRouter extends StatelessWidget {
   final bool isNotAuthorized;
