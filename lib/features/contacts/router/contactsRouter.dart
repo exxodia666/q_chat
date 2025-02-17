@@ -6,7 +6,7 @@ import 'package:q_chat/core/constants/routes.dart';
 import 'package:q_chat/features/contacts/bloc/contacts_bloc.dart';
 import 'package:q_chat/features/contacts/repositories/contacts_repository.dart';
 import 'package:q_chat/features/contacts/view/contacts_page.dart';
-import 'package:q_chat/features/profile/view/profile_page.dart';
+import 'package:q_chat/features/profile/view/pages/profile_page.dart';
 import 'package:q_chat/shared/widgets/custom_header/header.dart';
 import 'package:q_chat/shared/widgets/custom_scaffold/scaffold.dart';
 

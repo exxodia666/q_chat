@@ -3,15 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:q_chat/core/constants/routes.dart';
 import 'package:q_chat/features/authentication/bloc/authentication_bloc.dart';
-import 'package:q_chat/features/edit_profile/bloc/edit_profile_bloc.dart';
 import 'package:q_chat/shared/utils/navigation.dart';
 
-class EditProfileForm extends StatelessWidget {
-  const EditProfileForm({super.key});
+import '../../bloc/login_bloc.dart';
+
+class LoginForm extends StatelessWidget {
+  const LoginForm({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<EditProfileBloc, EditProfileState>(
+    return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state.status.isFailure) {
           ScaffoldMessenger.of(context)
@@ -30,12 +31,12 @@ class EditProfileForm extends StatelessWidget {
             const Padding(padding: EdgeInsets.all(12)),
             _PasswordInput(),
             const Padding(padding: EdgeInsets.all(12)),
-            _EditProfileButton(),
-            // ElevatedButton(
-            //     onPressed: () {
-            //       navigateTo(context, Routes.signUp);
-            //     },
-            //     child: const Text('Save'))
+            _LoginButton(),
+            ElevatedButton(
+                onPressed: () {
+                  navigateTo(context, Routes.signUp);
+                },
+                child: const Text('Sign Up'))
           ],
         ),
       ),
@@ -47,13 +48,13 @@ class _UsernameInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final displayError = context.select(
-      (EditProfileBloc bloc) => bloc.state.username.displayError,
+      (LoginBloc bloc) => bloc.state.username.displayError,
     );
 
     return TextField(
       key: const Key('loginForm_usernameInput_textField'),
       onChanged: (username) {
-        context.read<EditProfileBloc>().add(EditProfileUsernameChanged(username));
+        context.read<LoginBloc>().add(LoginUsernameChanged(username));
       },
       decoration: InputDecoration(
         labelText: 'username',
@@ -67,13 +68,13 @@ class _PasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final displayError = context.select(
-      (EditProfileBloc bloc) => bloc.state.password.displayError,
+      (LoginBloc bloc) => bloc.state.password.displayError,
     );
 
     return TextField(
       key: const Key('loginForm_passwordInput_textField'),
       onChanged: (password) {
-        context.read<EditProfileBloc>().add(EditProfilePasswordChanged(password));
+        context.read<LoginBloc>().add(LoginPasswordChanged(password));
       },
       obscureText: true,
       decoration: InputDecoration(
@@ -84,19 +85,19 @@ class _PasswordInput extends StatelessWidget {
   }
 }
 
-class _EditProfileButton extends StatelessWidget {
+class _LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isInProgressOrSuccess = context.select(
-      (EditProfileBloc bloc) => bloc.state.status.isInProgressOrSuccess,
+      (LoginBloc bloc) => bloc.state.status.isInProgressOrSuccess,
     );
 
     if (isInProgressOrSuccess) return const CircularProgressIndicator();
 
-    final isValid = context.select((EditProfileBloc bloc) => bloc.state.isValid);
-    final email = context.select((EditProfileBloc bloc) => bloc.state.username).value;
+    final isValid = context.select((LoginBloc bloc) => bloc.state.isValid);
+    final email = context.select((LoginBloc bloc) => bloc.state.username).value;
     final password =
-        context.select((EditProfileBloc bloc) => bloc.state.password).value;
+        context.select((LoginBloc bloc) => bloc.state.password).value;
     return ElevatedButton(
       key: const Key('loginForm_continue_raisedButton'),
       onPressed: isValid
@@ -104,7 +105,7 @@ class _EditProfileButton extends StatelessWidget {
               AuthenticationViaEmailAndPassword(
                   email: email, password: password))
           : null,
-      child: const Text('Save'),
+      child: const Text('Login'),
     );
   }
 }

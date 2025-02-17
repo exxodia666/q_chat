@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
-import 'package:q_chat/features/edit_profile/models/email.dart';
+import 'package:q_chat/features/profile/models/email.dart';
 import 'package:q_chat/shared/repositories/user_repository.dart';
 
 import '../models/models.dart';

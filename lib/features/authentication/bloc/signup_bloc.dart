@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
-
-import '../models/models.dart';
+import 'package:q_chat/features/profile/models/password.dart';
+import 'package:q_chat/features/profile/models/username.dart';
 
 part 'signup_event.dart';
 part 'signup_state.dart';
