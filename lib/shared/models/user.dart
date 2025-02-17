@@ -12,5 +12,7 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
+  static var empty = User(email: '', id: -1);
+
   Map<String, dynamic> toJson() => _$UserToJson(this);
 }

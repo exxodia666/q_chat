@@ -1,13 +1,15 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:q_chat/features/authentication/authentication.dart';
+import 'package:q_chat/features/edit_profile/bloc/edit_profile_bloc.dart';
 import 'package:q_chat/features/edit_profile/view/edit_profile_page.dart';
-import 'package:q_chat/features/profile/bloc/profile_bloc.dart';
-import 'package:q_chat/features/profile/repositories/profile_repository.dart';
 import 'package:q_chat/features/profile/view/profile_page.dart';
 import 'package:q_chat/core/constants/routes.dart';
+import 'package:q_chat/shared/repositories/user_repository.dart';
 import 'package:q_chat/shared/router/mainRouter.dart';
+import 'package:q_chat/shared/theme/colors.dart';
 import 'package:q_chat/shared/widgets/custom_header/header.dart';
 import 'package:q_chat/shared/widgets/custom_scaffold/scaffold.dart';
 
@@ -23,17 +25,28 @@ StatefulShellBranch profileBranch = StatefulShellBranch(
     GoRoute(
       path: Routes.profile,
       pageBuilder: (context, state) => NoTransitionPage(
-        child: BlocProvider(
-          create: (context) => ProfileBloc(
-              profileRepository: GetIt.instance<ProfileRepository>())
-            ..add(const GetUserProfile()),
-          child: CustomScaffold(
-            header: CustomHeader(
-              title: 'Profile',
-              backBtn: false,
-            ),
-            child: const ProfilePage(),
+        child: CustomScaffold(
+          header: CustomHeader(
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: 20.0),
+                child: InkWell(
+                  child: const Icon(
+                    Icons.exit_to_app,
+                    color: CustomColors.black,
+                  ),
+                  onTap: () {
+                    context
+                        .read<AuthenticationBloc>()
+                        .add(AuthenticationLogoutPressed());
+                  },
+                ),
+              )
+            ],
+            title: 'Profile',
+            backBtn: false,
           ),
+          child: const ProfilePage(),
         ),
       ),
       routes: [
@@ -45,7 +58,7 @@ StatefulShellBranch profileBranch = StatefulShellBranch(
               header: CustomHeader(
                 title: 'Edit Profile',
               ),
-              bottomAppBar: Container(),
+              // bottomAppBar: Container(),
               child: child,
             );
           },
@@ -54,7 +67,12 @@ StatefulShellBranch profileBranch = StatefulShellBranch(
               // parentNavigatorKey: _profileShellNavigatorKey,
               path: Routes.editProfile,
               builder: (BuildContext context, GoRouterState state) {
-                return const EditProfilePage();
+                final userRepository = GetIt.I.get<UserRepository>();
+                return BlocProvider(
+                  create: (context) =>
+                      EditProfileBloc(userRepository: userRepository),
+                  child: const EditProfilePage(),
+                );
               },
             ),
           ],
