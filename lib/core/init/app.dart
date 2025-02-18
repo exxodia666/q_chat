@@ -47,7 +47,7 @@ class _AppState extends State<App> {
         child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
           builder: (context, state) {
             return MainRouter(
-              isNotAuthorized: state.credentials.isEmpty(),
+              isAuthorized: !state.credentials.isEmpty(),
             );
           },
         ));

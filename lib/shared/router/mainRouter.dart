@@ -15,9 +15,9 @@ final GlobalKey<NavigatorState> rootNavigatorKey =
 //     GlobalKey<NavigatorState>(debugLabel: 'auth');
 
 class MainRouter extends StatelessWidget {
-  final bool isNotAuthorized;
+  final bool isAuthorized;
 
-  MainRouter({Key? key, required this.isNotAuthorized}) : super(key: key);
+  MainRouter({super.key, required this.isAuthorized});
 
   final GoRouter _router = GoRouter(
     navigatorKey: rootNavigatorKey,
@@ -46,7 +46,7 @@ class MainRouter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('isAuthorized: ${!isNotAuthorized}');
+    print('isAuthorized: ${!isAuthorized}');
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'QChat',
@@ -61,7 +61,7 @@ class MainRouter extends StatelessWidget {
       //   Locale('uk'), // Ukrainian
       // ],
       theme: ThemeData(),
-      routerConfig: isNotAuthorized ? authRouter : _router,
+      routerConfig: !isAuthorized ? authRouter : _router,
       // routes: {
       //   '/': (context) => SignIn(),
       //   '/signUp': (context) => SignUp(),
