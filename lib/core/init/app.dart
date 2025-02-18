@@ -40,7 +40,8 @@ class _AppState extends State<App> {
           ),
           BlocProvider(
             lazy: false,
-            create: (_) => UserBloc(userRepository: _userRepository),
+            create: (_) =>
+                UserBloc(userRepository: _userRepository)..add(GetUserMe()),
           )
         ],
         child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
