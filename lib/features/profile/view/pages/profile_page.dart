@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:q_chat/core/constants/routes.dart';
 import 'package:q_chat/shared/bloc/user_bloc.dart';
 import 'package:q_chat/shared/theme/colors.dart';
@@ -18,10 +19,17 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  @override
-  void initState() {
-    super.initState();
+  void getUserProfile() {
     context.read<UserBloc>().add(const GetUserMe());
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    String? currentLocation = GoRouterState.of(context).path;
+    if (currentLocation == Routes.profile) {
+      getUserProfile();
+    }
   }
 
   @override
@@ -55,8 +63,6 @@ class _UserId extends StatelessWidget {
       builder: (context, state) => SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Column(
-          // crossAxisAlignment: CrossAxisAlignment.start,
-          // mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const Spacer(flex: 1),
             Container(
@@ -77,7 +83,6 @@ class _UserId extends StatelessWidget {
                       decoration: const BoxDecoration(
                         color: CustomColors.primary,
                         shape: BoxShape.circle,
-                        // border: Border.all(color: Colors.black),
                       ),
                       child: const Icon(
                         Icons.edit_outlined,
@@ -130,7 +135,6 @@ class _UserId extends StatelessWidget {
                       Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
-                            // color: Colors.grey,
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(5.0)),
                             border: Border.all(color: Colors.grey)),
@@ -143,9 +147,6 @@ class _UserId extends StatelessWidget {
                         ),
                       ),
                     ])),
-            // const Spacer(
-            //   flex: 1,
-            // ),
             const Spacer(flex: 2),
             const _LogoutButton(),
             const Spacer(flex: 2),

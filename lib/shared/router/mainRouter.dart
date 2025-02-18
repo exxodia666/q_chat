@@ -32,7 +32,6 @@ class MainRouter extends StatelessWidget {
                 initialLocation: index == navigationShell.currentIndex,
               );
             }
-
             return CustomScaffold(
               bottomAppBar: BottomBar(
                 selectedIndex: navigationShell.currentIndex,
